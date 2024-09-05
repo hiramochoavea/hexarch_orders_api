@@ -30,7 +30,9 @@ SECRET_KEY = 'django-insecure-bei-y_a!ourxf(=e9nz!t&5m305(64f5uh7!w@*!30)9-50+op
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 
 # Application definition
@@ -43,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'hexarch_orders_api.items.infrastructure.apps.ItemsConfig',
+    'hexarch_orders_api.orders.infrastructure.apps'
 ]
 
 MIDDLEWARE = [
