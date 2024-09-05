@@ -1,0 +1,27 @@
+version: '3.8'
+
+
+services:
+
+  orders_api:
+    build: .
+    container_name: orders_api    
+    volumes:
+      - .:/app
+    ports:
+      - "4450:4450"
+    env_file:
+      - .env      
+    restart: on-failure      
+
+  mysql:
+    image: mysql:9.0.1
+    container_name: orders-mysql-db
+    environment:
+      MYSQL_DATABASE: orders_db
+      MYSQL_USER: orders_user
+      MYSQL_PASSWORD: orders2024*
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    restart: on-failure
