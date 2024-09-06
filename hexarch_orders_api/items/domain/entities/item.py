@@ -1,6 +1,6 @@
 class Item:
     def __init__(self, reference, name, description, price_without_tax, tax, created_at=None, pk=None):
-        self.pk = pk        
+        self.id = pk        
         self.reference = reference
         self.name = name
         self.description = description

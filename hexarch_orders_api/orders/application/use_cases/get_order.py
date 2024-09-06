@@ -6,4 +6,4 @@ class GetOrderUseCase:
         self.order_repository = order_repository
 
     def execute(self, order_id):
-        return get_object_or_404(self.order_repository.model_class, pk=order_id)
+        return self.order_repository.get(order_id)

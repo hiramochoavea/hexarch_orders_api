@@ -65,3 +65,15 @@ class ItemRepository:
             )
             for item in items
         ]
+    
+    def get_by_reference(self, reference: str) -> Item:
+        item_model = get_object_or_404(ItemModel, reference=reference)
+
+        return Item(
+            reference=item_model.reference,
+            name=item_model.name,
+            description=item_model.description,
+            price_without_tax=float(item_model.price_without_tax),
+            tax=float(item_model.tax),
+            created_at=item_model.created_at
+        )
