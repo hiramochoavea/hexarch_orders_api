@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'hexarch_orders_api.items.infrastructure.apps.ItemsConfig',
-    'hexarch_orders_api.orders.infrastructure.apps'
+    #'hexarch_orders_api.items.infrastructure.apps.ItemsConfig',
+    #'hexarch_orders_api.orders.infrastructure.apps.OrdersConfig'
+    'hexarch_orders_api.items.infrastructure',
+    'hexarch_orders_api.orders.infrastructure'
 ]
 
 MIDDLEWARE = [

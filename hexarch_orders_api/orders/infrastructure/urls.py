@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import OrderViewSet
-from rest_framework.routers import DefaultRouter
+from .views import OrderAPIView
 
-router = DefaultRouter()
-router.register(r'orders', OrderViewSet, basename='order')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('orders/', OrderAPIView.as_view(), name='order-list'),
+    path('orders/<int:order_id>/', OrderAPIView.as_view(), name='order-detail'),
+]
