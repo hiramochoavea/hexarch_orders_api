@@ -6,6 +6,8 @@ services:
   orders_api:
     build: .
     container_name: orders_api    
+    environment:
+      PYTHONUNBUFFERED: 1    
     volumes:
       - .:/app
     ports:
