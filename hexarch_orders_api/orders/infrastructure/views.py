@@ -38,9 +38,22 @@ class OrderAPIView(APIView):
         
         if serializer.is_valid():
             order_data = serializer.validated_data
-            #print(order_data)
             order = self.service.create_order(order_data)
             response_serializer = OrderSerializer(order)
             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+    def put(self, request, order_id):
+        serializer = OrderSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                updated_order = self.service.update_order(order_id, serializer.validated_data)
+                response_serializer = OrderSerializer(updated_order)
+                return Response(response_serializer.data, status=status.HTTP_200_OK)
+            except ValueError as e:
+                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
