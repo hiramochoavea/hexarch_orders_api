@@ -10,7 +10,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
-    created_at = serializers.DateTimeField()
+    created_at = serializers.DateTimeField(read_only=True)
+    total_price_without_tax = serializers.FloatField(read_only=True)
+    total_price_with_tax = serializers.FloatField(read_only=True)
 
     class Meta:
         model = OrderModel

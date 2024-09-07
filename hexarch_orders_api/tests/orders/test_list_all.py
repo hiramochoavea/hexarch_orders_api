@@ -20,5 +20,13 @@ def test_list_all_orders(api_client, reverse_url, initial_order):
         any(item['reference'] == initial_order.items.first().reference for item in order['items'])
         for order in orders
     )
-    #assert any(order['total_price_without_tax'] == initial_order.total_price_without_tax for order in orders)
-    #assert any(order['total_price_with_tax'] == initial_order.total_price_with_tax for order in orders)
+
+    # Check total prices with an absolute tolerance for floating-point comparison
+    assert any(
+        abs(order['total_price_without_tax'] - initial_order.total_price_without_tax) < 0.01
+        for order in orders
+    )
+    assert any(
+        abs(order['total_price_with_tax'] - initial_order.total_price_with_tax) < 0.01
+        for order in orders
+    )
