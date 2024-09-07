@@ -10,6 +10,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    created_at = serializers.DateTimeField()
 
     class Meta:
         model = OrderModel

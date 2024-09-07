@@ -89,11 +89,11 @@ WSGI_APPLICATION = 'hexarch_orders_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DATABASE', 'orders_db'),  # The name of your database
-        'USER': os.getenv('MYSQL_USER', 'orders_user'),     # The MySQL user
-        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'orders2024*'),  # The user's password
-        'HOST': 'mysql',  # This matches the MySQL service name in docker-compose.yml
-        'PORT': '3306',   # The default MySQL port
+        'NAME': os.getenv('MYSQL_DATABASE', 'orders_db'),
+        'USER': os.getenv('MYSQL_USER', 'orders_user'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'orders2024*'),
+        'HOST': 'mysql',
+        'PORT': '3306',
     }
 }
 
@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 

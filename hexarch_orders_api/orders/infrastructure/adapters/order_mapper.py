@@ -16,7 +16,7 @@ class OrderMapper:
             ],
             total_price_without_tax=float(order_model.total_price_without_tax),
             total_price_with_tax=float(order_model.total_price_with_tax),
-            creation_date=order_model.created_at
+            created_at=order_model.created_at
         )
 
     @staticmethod

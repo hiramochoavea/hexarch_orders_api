@@ -1,5 +1,4 @@
 from ...infrastructure.adapters.order_repository import OrderRepository
-from django.shortcuts import get_object_or_404
 
 class GetOrderUseCase:
     def __init__(self, order_repository: OrderRepository):
