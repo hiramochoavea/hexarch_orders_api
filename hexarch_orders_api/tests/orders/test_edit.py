@@ -1,5 +1,6 @@
 import pytest
 from rest_framework import status
+from ...orders.domain.utils import calculate_price_totals
 
 @pytest.mark.django_db
 def test_edit_order(api_client, reverse_url, initial_order, initial_item):
@@ -39,8 +40,14 @@ def test_edit_order(api_client, reverse_url, initial_order, initial_item):
     assert data['items'][0]['quantity'] == payload['items'][0]['quantity']
     
     # Calculate expected prices based on the updated payload
-    expected_total_price_without_tax = initial_item.price_without_tax * payload['items'][0]['quantity']
-    expected_total_price_with_tax = (initial_item.price_without_tax * (1 + initial_item.tax / 100)) * payload['items'][0]['quantity']
+    items = [
+        {
+            "price_without_tax": initial_item.price_without_tax,
+            "tax": initial_item.tax,
+            "quantity": payload['items'][0]['quantity']
+        }
+    ]
+    expected_total_price_without_tax, expected_total_price_with_tax = calculate_price_totals(items)
 
     # Assert the calculated total prices match the response
     assert abs(data['total_price_without_tax'] - expected_total_price_without_tax) < 0.01
