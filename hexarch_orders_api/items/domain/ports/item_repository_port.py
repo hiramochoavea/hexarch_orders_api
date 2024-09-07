@@ -1,10 +1,11 @@
+from typing import List
 from abc import ABC, abstractmethod
 from ..entities.item import Item
 
 class ItemRepositoryPort(ABC):
     
     @abstractmethod
-    def list_all(self) -> list:
+    def list_all(self) -> List[Item]:
         """ Returns a list of all items. """
         pass
 

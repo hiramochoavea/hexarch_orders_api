@@ -1,4 +1,4 @@
-from ...infrastructure.repositories.order_repository import OrderRepository
+from ...infrastructure.adapters.order_repository import OrderRepository
 
 class ListOrdersUseCase:
     def __init__(self, order_repository: OrderRepository):

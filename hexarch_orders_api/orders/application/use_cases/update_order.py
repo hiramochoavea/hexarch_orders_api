@@ -1,6 +1,6 @@
 from ...domain.entities.order import Order
 from ...domain.entities.order_item import OrderItem
-from ...infrastructure.repositories.order_repository import OrderRepository
+from ...infrastructure.adapters.order_repository import OrderRepository
 from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
 
 class UpdateOrderUseCase:
@@ -9,7 +9,7 @@ class UpdateOrderUseCase:
         self.item_repository = item_repository
 
     def execute(self, order_id, order_data):
-        order = self.order_repository.get(order_id)
+        order = self.order_repository.get_by_id(order_id)
         
         if not order:
             raise ValueError("Order not found")

@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer
 from ..domain.services.order_service import OrderService
-from ..infrastructure.repositories.order_repository import OrderRepository
+from ..infrastructure.adapters.order_repository import OrderRepository
 from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
+from ..domain.exceptions import ItemNotFoundException
 
 class OrderAPIView(APIView):
 
@@ -38,9 +39,15 @@ class OrderAPIView(APIView):
         
         if serializer.is_valid():
             order_data = serializer.validated_data
-            order = self.service.create_order(order_data)
-            response_serializer = OrderSerializer(order)
-            return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+            
+            try:
+                order = self.service.create_order(order_data)
+                response_serializer = OrderSerializer(order)
+                return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+            except ItemNotFoundException as e:
+                return Response({'error': str(e)}, status=status.HTTP_409_CONFLICT)
+            except Exception as e:
+                return Response({'error': 'An unexpected error occurred.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
