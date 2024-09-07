@@ -1,7 +1,7 @@
 #from ..entities.order import Order
 from ...infrastructure.repositories.order_repository import OrderRepository
 from ...application.use_cases import list_order, get_order, create_order, update_order
-from hexarch_orders_api.items.infrastructure.repositories.item_repository import ItemRepository
+from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
 
 class OrderService:
     def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):

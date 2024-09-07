@@ -1,4 +1,4 @@
-from ...infrastructure.repositories.item_repository import ItemRepository
+from ...infrastructure.adapters.item_repository import ItemRepository
 
 class ListItemsUseCase:
     def __init__(self, item_repository: ItemRepository):

@@ -1,5 +1,5 @@
 from ..entities.item import Item
-from ...infrastructure.repositories.item_repository import ItemRepository
+from ...infrastructure.adapters.item_repository import ItemRepository
 from ...application.use_cases import create_item, update_item, list_item, get_item
 
 class ItemService:

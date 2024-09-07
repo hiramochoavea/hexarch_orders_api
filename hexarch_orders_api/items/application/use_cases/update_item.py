@@ -1,5 +1,5 @@
 from ...domain.entities.item import Item
-from ...infrastructure.repositories.item_repository import ItemRepository
+from ...infrastructure.adapters.item_repository import ItemRepository
 
 class UpdateItemUseCase:
     def __init__(self, item_repository: ItemRepository):

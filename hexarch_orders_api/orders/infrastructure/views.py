@@ -4,7 +4,7 @@ from rest_framework import status
 from .serializers import OrderSerializer
 from ..domain.services.order_service import OrderService
 from ..infrastructure.repositories.order_repository import OrderRepository
-from hexarch_orders_api.items.infrastructure.repositories.item_repository import ItemRepository
+from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
 
 class OrderAPIView(APIView):
 

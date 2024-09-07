@@ -1,7 +1,7 @@
 from ...domain.entities.order import Order
 from ...domain.entities.order_item import OrderItem
 from ...infrastructure.repositories.order_repository import OrderRepository
-from hexarch_orders_api.items.infrastructure.repositories.item_repository import ItemRepository
+from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
 
 class CreateOrderUseCase:
     def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
