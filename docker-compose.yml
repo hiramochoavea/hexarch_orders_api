@@ -14,6 +14,8 @@ services:
       - "4450:4450"
     env_file:
       - .env      
+    depends_on:
+      - mysql      
     restart: on-failure      
 
   mysql:
@@ -24,6 +26,8 @@ services:
       MYSQL_USER: orders_user
       MYSQL_PASSWORD: orders2024*
       MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - ./db_scripts:/docker-entrypoint-initdb.d      
     ports:
       - "3306:3306"
     restart: on-failure

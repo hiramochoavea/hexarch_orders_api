@@ -4,5 +4,15 @@
 Django==5.0.4
 djangorestframework==3.15.1
 django-cors-headers==4.4.0
+pytest-django==4.9.0
+
+# ----------------------
+# Python packages
+# ----------------------
 python-dotenv==1.0.1
+pytest==8.3.2
+
+# ----------------------
+# Database packages
+# ----------------------
 mysqlclient==2.2.4
