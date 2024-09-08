@@ -2,6 +2,7 @@ from typing import List
 from abc import ABC, abstractmethod
 from ..entities.order import Order
 
+
 class OrderRepositoryPort(ABC):
     """
     Abstract base class for the Order repository port.
@@ -19,7 +20,7 @@ class OrderRepositoryPort(ABC):
             Order: The order with the specified identifier.
         """
         pass
-    
+
     @abstractmethod
     def list_all(self) -> List[Order]:
         """
@@ -29,7 +30,7 @@ class OrderRepositoryPort(ABC):
             List[Order]: A list of all orders.
         """
         pass
-    
+
     @abstractmethod
     def create(self, order: Order) -> Order:
         """
@@ -42,7 +43,7 @@ class OrderRepositoryPort(ABC):
             Order: The created order.
         """
         pass
-    
+
     @abstractmethod
     def update(self, order: Order) -> Order:
         """

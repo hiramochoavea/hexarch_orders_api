@@ -9,6 +9,6 @@ class OrdersConfig(AppConfig):
         default_auto_field (str): The default field type for auto-generated primary keys.
         name (str): The name of the Django app.
     """
-        
+
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'hexarch_orders_api.orders'

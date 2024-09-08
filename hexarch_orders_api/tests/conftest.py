@@ -7,12 +7,14 @@ from ..orders.domain.entities.order import Order
 from ..orders.infrastructure.models import OrderModel, OrderItemModel
 from ..orders.domain.utils import calculate_price_totals
 
+
 @pytest.fixture
 def api_client() -> APIClient:
     """
     Fixture that provides an instance of APIClient for making HTTP requests in tests.
     """
     return APIClient()
+
 
 @pytest.fixture
 def reverse_url() -> Callable[[str, tuple, dict], str]:
@@ -30,6 +32,7 @@ def reverse_url() -> Callable[[str, tuple, dict], str]:
     def _reverse_url(name, *args, **kwargs):
         return reverse(name, *args, **kwargs)
     return _reverse_url
+
 
 @pytest.fixture
 def initial_item(db) -> ItemModel:
@@ -52,6 +55,7 @@ def initial_item(db) -> ItemModel:
     )
     return item_obj
 
+
 @pytest.fixture
 def initial_order(db, initial_item: ItemModel) -> Order:
     """
@@ -72,7 +76,7 @@ def initial_order(db, initial_item: ItemModel) -> Order:
         item=initial_item,
         quantity=quantity
     )
-    
+
     items_info = [
         {
             'price_without_tax': initial_item.price_without_tax,
@@ -80,9 +84,10 @@ def initial_order(db, initial_item: ItemModel) -> Order:
             'quantity': quantity
         }
     ]
-    
-    total_price_without_tax, total_price_with_tax = calculate_price_totals(items_info)
-    
+
+    total_price_without_tax, total_price_with_tax = calculate_price_totals(
+        items_info)
+
     order.total_price_without_tax = total_price_without_tax
     order.total_price_with_tax = total_price_with_tax
     order.save()

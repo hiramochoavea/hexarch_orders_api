@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from typing import Callable
 from ...items.infrastructure.models import ItemModel
 
+
 @pytest.mark.django_db
 def test_get_item_by_id(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_item: ItemModel) -> None:
     """

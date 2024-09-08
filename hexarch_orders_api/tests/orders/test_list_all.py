@@ -33,16 +33,19 @@ def test_list_all_orders(api_client: APIClient, reverse_url: Callable[[str, ...]
     assert len(orders) > 0
     assert any(order['id'] == initial_order.id for order in orders)
     assert any(
-        any(item['reference'] == initial_order.items.first().reference for item in order['items'])
+        any(item['reference'] == initial_order.items.first(
+        ).reference for item in order['items'])
         for order in orders
     )
 
     # Check total prices with an absolute tolerance for floating-point comparison
     assert any(
-        abs(order['total_price_without_tax'] - initial_order.total_price_without_tax) < 0.01
+        abs(order['total_price_without_tax'] -
+            initial_order.total_price_without_tax) < 0.01
         for order in orders
     )
     assert any(
-        abs(order['total_price_with_tax'] - initial_order.total_price_with_tax) < 0.01
+        abs(order['total_price_with_tax'] -
+            initial_order.total_price_with_tax) < 0.01
         for order in orders
     )

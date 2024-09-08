@@ -2,6 +2,7 @@ from typing import List
 from abc import ABC, abstractmethod
 from ..entities.item import Item
 
+
 class ItemRepositoryPort(ABC):
     """
     Abstract base class defining the interface for item repositories.
@@ -12,8 +13,8 @@ class ItemRepositoryPort(ABC):
         get_by_reference(reference: str) -> Item: Retrieves an item by its reference.
         create(item: Item) -> Item: Creates a new item.
         update(item_id: int, item_data: dict) -> Item: Updates an existing item with new data.
-    """       
-    
+    """
+
     @abstractmethod
     def list_all(self) -> List[Item]:
         """

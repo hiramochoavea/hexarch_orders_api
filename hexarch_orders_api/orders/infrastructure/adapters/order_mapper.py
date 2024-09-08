@@ -3,6 +3,7 @@ from ...domain.entities.order_item import OrderItem
 from ...infrastructure.models import OrderModel, OrderItemModel
 from hexarch_orders_api.items.infrastructure.models import ItemModel
 
+
 class OrderMapper:
     """
     Mapper for converting between Order and OrderModel.
@@ -10,7 +11,7 @@ class OrderMapper:
     Methods:
         to_domain(order_model: OrderModel) -> Order: Converts an OrderModel instance to an Order instance.
         to_model(order: Order) -> OrderModel: Converts an Order instance to an OrderModel instance.
-    """    
+    """
     @staticmethod
     def to_domain(order_model: OrderModel) -> Order:
         """
@@ -21,7 +22,7 @@ class OrderMapper:
 
         Returns:
             An Order instance.
-        """        
+        """
         return Order(
             id=order_model.pk,
             items=[
@@ -46,7 +47,7 @@ class OrderMapper:
 
         Returns:
             An OrderModel instance.
-        """        
+        """
         return OrderModel(
             total_price_without_tax=order.total_price_without_tax,
             total_price_with_tax=order.total_price_with_tax

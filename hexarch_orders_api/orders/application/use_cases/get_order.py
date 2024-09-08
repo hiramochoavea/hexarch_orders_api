@@ -1,6 +1,7 @@
 from ...domain.entities.order import Order
 from ...infrastructure.adapters.order_repository import OrderRepository
 
+
 class GetOrderUseCase:
     """
     Use case for retrieving a single order by its unique identifier.
@@ -12,7 +13,7 @@ class GetOrderUseCase:
 
         Args:
             order_repository (OrderRepository): The repository used to access order data.
-        """        
+        """
         self.order_repository = order_repository
 
     def execute(self, order_id: int) -> Order:
@@ -24,5 +25,5 @@ class GetOrderUseCase:
 
         Returns:
             Order: The order with the specified identifier.
-        """        
+        """
         return self.order_repository.get_by_id(order_id)

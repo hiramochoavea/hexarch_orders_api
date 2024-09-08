@@ -4,5 +4,5 @@ class ItemNotFoundException(Exception):
 
     Inherits from:
         Exception
-    """     
+    """
     pass

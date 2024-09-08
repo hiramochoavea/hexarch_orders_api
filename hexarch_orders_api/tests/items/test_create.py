@@ -22,7 +22,7 @@ def test_create_item(api_client: APIClient, reverse_url: Callable[[str, ...], st
         name="Google Pixel 6",
         description="A high-performance smartphone with a 6.4-inch AMOLED display, 128GB storage, and Google's Tensor chip.",
         price_without_tax=649.00,
-        tax=21      
+        tax=21
     )
 
     # Make the POST request to create an item

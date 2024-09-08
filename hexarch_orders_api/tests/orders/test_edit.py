@@ -58,7 +58,7 @@ def test_edit_order(api_client: APIClient, reverse_url: Callable[[str, ...], str
     assert len(data['items']) > 0
     assert data['items'][0]['reference'] == payload['items'][0]['reference']
     assert data['items'][0]['quantity'] == payload['items'][0]['quantity']
-    
+
     # Calculate expected prices based on the updated payload
     items = [
         {
@@ -67,8 +67,11 @@ def test_edit_order(api_client: APIClient, reverse_url: Callable[[str, ...], str
             "quantity": payload['items'][0]['quantity']
         }
     ]
-    expected_total_price_without_tax, expected_total_price_with_tax = calculate_price_totals(items)
+    expected_total_price_without_tax, expected_total_price_with_tax = calculate_price_totals(
+        items)
 
     # Assert the calculated total prices match the response
-    assert abs(data['total_price_without_tax'] - expected_total_price_without_tax) < 0.01
-    assert abs(data['total_price_with_tax'] - expected_total_price_with_tax) < 0.01
+    assert abs(data['total_price_without_tax'] -
+               expected_total_price_without_tax) < 0.01
+    assert abs(data['total_price_with_tax'] -
+               expected_total_price_with_tax) < 0.01

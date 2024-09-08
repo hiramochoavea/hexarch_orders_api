@@ -10,6 +10,6 @@ class OrderItem:
         Args:
             quantity (int): The quantity of the item.
             reference (str): The reference of the item.
-        """        
+        """
         self.quantity = quantity
         self.reference = reference

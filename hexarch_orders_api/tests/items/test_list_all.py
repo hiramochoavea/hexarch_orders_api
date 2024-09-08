@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from typing import Callable
 from ...items.infrastructure.models import ItemModel
 
+
 @pytest.mark.django_db
 def test_list_all_items(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_item: ItemModel) -> None:
     """
@@ -32,6 +33,8 @@ def test_list_all_items(api_client: APIClient, reverse_url: Callable[[str, ...],
     assert len(items) > 0
     assert any(item['reference'] == initial_item.reference for item in items)
     assert any(item['name'] == initial_item.name for item in items)
-    assert any(item['description'] == initial_item.description for item in items)
-    assert any(item['price_without_tax'] == initial_item.price_without_tax for item in items)
-    assert any(item['tax'] == initial_item.tax for item in items)    
+    assert any(item['description'] ==
+               initial_item.description for item in items)
+    assert any(item['price_without_tax'] ==
+               initial_item.price_without_tax for item in items)
+    assert any(item['tax'] == initial_item.tax for item in items)

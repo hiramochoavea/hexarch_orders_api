@@ -3,6 +3,7 @@ from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 from ...application.use_cases import create_item, update_item, list_item, get_item
 
+
 class ItemService:
     """
     Service for handling item-related operations using various use cases.
@@ -13,19 +14,19 @@ class ItemService:
         list_items_use_case (ListItemsUseCase): Use case for listing all items.
         create_item_use_case (CreateItemUseCase): Use case for creating a new item.
         update_item_use_case (UpdateItemUseCase): Use case for updating an existing item.
-    """ 
-        
+    """
+
     def __init__(self, repository: ItemRepository) -> None:
         """
         Initialize the ItemService with the repository and use cases.
 
         Args:
             repository (ItemRepository): The repository that handles item-related data.
-        """        
+        """
         self.repository = repository
 
-        self.get_item_use_case = get_item.GetItemUseCase(repository)        
-        self.list_items_use_case = list_item.ListItemsUseCase(repository)        
+        self.get_item_use_case = get_item.GetItemUseCase(repository)
+        self.list_items_use_case = list_item.ListItemsUseCase(repository)
         self.create_item_use_case = create_item.CreateItemUseCase(repository)
         self.update_item_use_case = update_item.UpdateItemUseCase(repository)
 
@@ -38,7 +39,7 @@ class ItemService:
 
         Returns:
             Item: The retrieved item.
-        """        
+        """
         return self.get_item_use_case.execute(item_id)
 
     def list_items(self) -> List[Item]:
@@ -47,7 +48,7 @@ class ItemService:
 
         Returns:
             List[Item]: A list of all items.
-        """        
+        """
         return self.list_items_use_case.execute()
 
     def create_item(self, data: dict) -> Item:
@@ -59,7 +60,7 @@ class ItemService:
 
         Returns:
             Item: The created item.
-        """        
+        """
         return self.create_item_use_case.execute(data)
 
     def update_item(self, item_id: int, item_data: dict) -> Item:
@@ -72,6 +73,5 @@ class ItemService:
 
         Returns:
             Item: The updated item.
-        """        
+        """
         return self.update_item_use_case.execute(item_id, item_data)
-

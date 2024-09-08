@@ -7,6 +7,7 @@ from .serializers import ItemSerializer
 from ..domain.services.item_service import ItemService
 from ..infrastructure.adapters.item_repository import ItemRepository
 
+
 class ItemAPIView(APIView):
 
     def __init__(self, **kwargs) -> None:
@@ -15,11 +16,10 @@ class ItemAPIView(APIView):
 
         Args:
             **kwargs: Additional keyword arguments for the APIView.
-        """        
+        """
         super().__init__(**kwargs)
 
         self.service = ItemService(ItemRepository())
-
 
     def get(self, request: Request, item_id: Optional[int] = None) -> Response:
         """
@@ -31,7 +31,7 @@ class ItemAPIView(APIView):
 
         Returns:
             Response: The HTTP response object containing the item data or a status code.
-        """        
+        """
 
         # Retrieve an existent id
         if item_id is not None:
@@ -39,9 +39,9 @@ class ItemAPIView(APIView):
 
             if item is None:
                 return Response(status=status.HTTP_404_NOT_FOUND)
-            
+
             serializer = ItemSerializer(item)
-            return Response(serializer.data, status=status.HTTP_200_OK)        
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         # List all items
         items = self.service.list_items()
@@ -49,9 +49,8 @@ class ItemAPIView(APIView):
 
         if not items:
             return Response(status=status.HTTP_204_NO_CONTENT)
-        
+
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
     def post(self, request: Request) -> Response:
         """
@@ -62,19 +61,18 @@ class ItemAPIView(APIView):
 
         Returns:
             Response: The HTTP response object containing the created item data or errors.
-        """        
+        """
 
         # Create a new item
         serializer = ItemSerializer(data=request.data)
-        
+
         if serializer.is_valid():
             item_data = serializer.validated_data
             item = self.service.create_item(item_data)
             response_serializer = ItemSerializer(item)
             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
     def put(self, request: Request, item_id: Optional[int] = None) -> Response:
         """
@@ -86,7 +84,7 @@ class ItemAPIView(APIView):
 
         Returns:
             Response: The HTTP response object containing the updated item data or an error message.
-        """        
+        """
         if item_id is None:
             return Response({"detail": "Item ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -100,7 +98,7 @@ class ItemAPIView(APIView):
         try:
             # Pass the data to the service
             updated_item = self.service.update_item(item_id, request_data)
-            
+
             # Serialize the updated item back to the response
             serializer = ItemSerializer(updated_item)
             return Response(serializer.data)

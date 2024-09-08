@@ -38,9 +38,11 @@ def test_get_order_by_id(api_client: APIClient, reverse_url: Callable[[str, ...]
     first_item_on_order = initial_order.items.first()
 
     assert any(
-        item['reference'] == first_item_on_order.reference and 
+        item['reference'] == first_item_on_order.reference and
         item['quantity'] == first_item_on_order.item_orders.first().quantity
         for item in order['items']
     )
-    assert abs(order['total_price_without_tax'] - initial_order.total_price_without_tax) < 0.01
-    assert abs(order['total_price_with_tax'] - initial_order.total_price_with_tax) < 0.01
+    assert abs(order['total_price_without_tax'] -
+               initial_order.total_price_without_tax) < 0.01
+    assert abs(order['total_price_with_tax'] -
+               initial_order.total_price_with_tax) < 0.01

@@ -4,6 +4,7 @@ from ...domain.ports.item_repository_port import ItemRepositoryPort
 from ...infrastructure.models import ItemModel
 from .item_mapper import ItemMapper
 
+
 class ItemRepository(ItemRepositoryPort):
     """
     Repository for managing item persistence.
@@ -14,14 +15,14 @@ class ItemRepository(ItemRepositoryPort):
     Attributes:
         model_class (Type[ItemModel]): The model class used for item persistence.
     """
-        
+
     def __init__(self):
         """
         Initialize the ItemRepository with the ItemModel class.
 
         Args:
             None
-        """        
+        """
         self.model_class = ItemModel
 
     def list_all(self) -> List[Item]:
@@ -30,10 +31,10 @@ class ItemRepository(ItemRepositoryPort):
 
         Returns:
             List: A list of domain Item instances.
-        """        
+        """
         items = self.model_class.objects.all()
         return [ItemMapper.to_domain(item) for item in items]
-    
+
     def get_by_id(self, item_id: int) -> Item:
         """
         Retrieve an item by its unique identifier.
@@ -43,7 +44,7 @@ class ItemRepository(ItemRepositoryPort):
 
         Returns:
             Item: The domain Item instance, or None if not found.
-        """        
+        """
         try:
             item_model = self.model_class.objects.get(id=item_id)
         except ItemModel.DoesNotExist:
@@ -59,7 +60,7 @@ class ItemRepository(ItemRepositoryPort):
 
         Returns:
             Item: The domain Item instance, or None if not found.
-        """        
+        """
         try:
             item_model = self.model_class.objects.get(reference=reference)
         except ItemModel.DoesNotExist:
@@ -75,11 +76,11 @@ class ItemRepository(ItemRepositoryPort):
 
         Returns:
             Item: The created domain Item instance.
-        """        
+        """
         item_model = ItemMapper.to_model(item)
         item_model.save()
         return ItemMapper.to_domain(item_model)
-    
+
     def update(self, item_id: int, item_data: dict) -> ItemModel:
         """
         Update an existing item with new data.
@@ -90,7 +91,7 @@ class ItemRepository(ItemRepositoryPort):
 
         Returns:
             Item: The updated domain Item instance, or None if not found.
-        """        
+        """
         try:
             item_model = self.model_class.objects.get(id=item_id)
         except ItemModel.DoesNotExist:
@@ -98,8 +99,10 @@ class ItemRepository(ItemRepositoryPort):
 
         item_model.reference = item_data.get('reference', item_model.reference)
         item_model.name = item_data.get('name', item_model.name)
-        item_model.description = item_data.get('description', item_model.description)
-        item_model.price_without_tax = item_data.get('price_without_tax', item_model.price_without_tax)
+        item_model.description = item_data.get(
+            'description', item_model.description)
+        item_model.price_without_tax = item_data.get(
+            'price_without_tax', item_model.price_without_tax)
         item_model.tax = item_data.get('tax', item_model.tax)
         item_model.save()
 
