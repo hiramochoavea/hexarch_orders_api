@@ -1,7 +1,9 @@
+from typing import List
+from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class ListItemsUseCase:
-    def __init__(self, item_repository: ItemRepository):
+    def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the ListItemsUseCase with the given item repository.
 
@@ -10,12 +12,12 @@ class ListItemsUseCase:
         """        
         self.item_repository = item_repository
 
-    def execute(self):
+    def execute(self) -> List[Item]:
         """
         List all available items.
 
         Returns:
-            list[Item]: A list of all items in the system.
+            List[Item]: A list of all items in the system.
         """        
         return self.item_repository.list_all()
     

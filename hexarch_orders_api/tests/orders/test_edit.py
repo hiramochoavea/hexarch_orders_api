@@ -1,9 +1,14 @@
 import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
+from typing import Callable
+from ...items.infrastructure.models import ItemModel
+from ...orders.infrastructure.models import OrderModel
 from ...orders.domain.utils import calculate_price_totals
 
+
 @pytest.mark.django_db
-def test_edit_order(api_client, reverse_url, initial_order, initial_item):
+def test_edit_order(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_order: OrderModel, initial_item: ItemModel) -> None:
     """
     Tests the update of an order through the API.
 

@@ -1,7 +1,8 @@
+from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class GetItemUseCase:
-    def __init__(self, item_repository: ItemRepository):
+    def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the GetItemUseCase with the given item repository.
 
@@ -10,7 +11,7 @@ class GetItemUseCase:
         """        
         self.item_repository = item_repository
 
-    def execute(self, item_id):
+    def execute(self, item_id: int) -> Item:
         """
         Retrieve an item by its unique identifier.
 

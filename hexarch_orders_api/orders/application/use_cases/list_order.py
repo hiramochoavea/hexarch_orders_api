@@ -1,3 +1,5 @@
+from typing import List
+from ...domain.entities.order import Order
 from ...infrastructure.adapters.order_repository import OrderRepository
 
 class ListOrdersUseCase:
@@ -5,7 +7,7 @@ class ListOrdersUseCase:
     Use case for listing all orders.
     """
 
-    def __init__(self, order_repository: OrderRepository):
+    def __init__(self, order_repository: OrderRepository) -> None:
         """
         Initialize the ListOrdersUseCase.
 
@@ -14,7 +16,7 @@ class ListOrdersUseCase:
         """        
         self.order_repository = order_repository
 
-    def execute(self):
+    def execute(self) -> List[Order]:
         """
         Execute the use case to list all orders.
 

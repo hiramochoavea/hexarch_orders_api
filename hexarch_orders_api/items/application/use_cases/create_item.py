@@ -2,7 +2,7 @@ from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class CreateItemUseCase:
-    def __init__(self, item_repository: ItemRepository):
+    def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the CreateItemUseCase with the given item repository.
 
@@ -11,7 +11,7 @@ class CreateItemUseCase:
         """        
         self.item_repository = item_repository
 
-    def execute(self, data):
+    def execute(self, data: dict) -> Item:
         """
         Create a new item using the provided data.
 

@@ -1,8 +1,10 @@
 import pytest
+from rest_framework.test import APIClient
+from typing import Callable
 
 
 @pytest.mark.django_db
-def test_create_item(api_client, reverse_url):
+def test_create_item(api_client: APIClient, reverse_url: Callable[[str, ...], str]) -> None:
     """
     Tests the creation of an item through the API.
 

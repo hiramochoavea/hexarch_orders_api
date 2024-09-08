@@ -1,8 +1,13 @@
 import pytest
+from rest_framework import status
+from rest_framework.test import APIClient
+from typing import Callable
 from ...orders.domain.utils import calculate_price_totals
+from ...items.infrastructure.models import ItemModel
+
 
 @pytest.mark.django_db
-def test_create_order(api_client, reverse_url, initial_item):
+def test_create_order(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_item: ItemModel) -> None:
     """
     Tests the creation of an order through the API.
 
@@ -33,7 +38,7 @@ def test_create_order(api_client, reverse_url, initial_item):
     data = response.data
 
     # Assert the response status code is 201 (Created)
-    assert response.status_code == 201
+    assert response.status_code == status.HTTP_201_CREATED
 
     # Verify the response contains the expected fields and values
     assert "id" in data

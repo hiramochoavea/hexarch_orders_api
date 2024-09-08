@@ -4,7 +4,7 @@ class Order:
     """
 
     def __init__(self, id=None, items=None, total_price_without_tax=0.00, 
-                 total_price_with_tax=0.00, created_at=None):
+                 total_price_with_tax=0.00, created_at=None) -> None:
         """
         Initialize an Order.
 

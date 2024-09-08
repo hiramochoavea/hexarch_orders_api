@@ -3,7 +3,7 @@ class OrderItem:
     Represents an item in an order.
     """
 
-    def __init__(self, quantity, reference):
+    def __init__(self, quantity, reference) -> None:
         """
         Initialize an OrderItem.
 

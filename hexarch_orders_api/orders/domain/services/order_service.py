@@ -1,4 +1,5 @@
-#from ..entities.order import Order
+from typing import List
+from ..entities.order import Order
 from ...infrastructure.adapters.order_repository import OrderRepository
 from ...application.use_cases import list_order, get_order, create_order, update_order
 from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
@@ -8,7 +9,7 @@ class OrderService:
     Service class for managing orders.
     """
 
-    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
+    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository) -> None:
         """
         Initialize the OrderService.
 
@@ -24,7 +25,7 @@ class OrderService:
         self.create_order_use_case = create_order.CreateOrderUseCase(order_repository, item_repository)
         self.update_order_use_case = update_order.UpdateOrderUseCase(order_repository, item_repository)
 
-    def get_order(self, order_id):
+    def get_order(self, order_id: int) -> Order:
         """
         Retrieve an order by its unique identifier.
 
@@ -36,7 +37,7 @@ class OrderService:
         """        
         return self.get_order_use_case.execute(order_id)
 
-    def list_orders(self):
+    def list_orders(self) -> List[Order]:
         """
         List all orders.
 
@@ -45,7 +46,7 @@ class OrderService:
         """        
         return self.list_orders_use_case.execute()
 
-    def create_order(self, data):
+    def create_order(self, data: dict) -> Order:
         """
         Create a new order.
 
@@ -57,7 +58,7 @@ class OrderService:
         """        
         return self.create_order_use_case.execute(data)
 
-    def update_order(self, order_id, order_data):
+    def update_order(self, order_id: int, order_data: dict) -> Order:
         """
         Update an existing order.
 

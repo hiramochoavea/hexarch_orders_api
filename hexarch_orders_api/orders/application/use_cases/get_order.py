@@ -1,3 +1,4 @@
+from ...domain.entities.order import Order
 from ...infrastructure.adapters.order_repository import OrderRepository
 
 class GetOrderUseCase:
@@ -5,7 +6,7 @@ class GetOrderUseCase:
     Use case for retrieving a single order by its unique identifier.
     """
 
-    def __init__(self, order_repository: OrderRepository):
+    def __init__(self, order_repository: OrderRepository) -> None:
         """
         Initialize the GetOrderUseCase.
 
@@ -14,7 +15,7 @@ class GetOrderUseCase:
         """        
         self.order_repository = order_repository
 
-    def execute(self, order_id):
+    def execute(self, order_id: int) -> Order:
         """
         Execute the use case to retrieve an order by its identifier.
 

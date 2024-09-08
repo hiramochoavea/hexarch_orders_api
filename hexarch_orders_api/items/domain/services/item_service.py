@@ -1,8 +1,10 @@
+from typing import List
+from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 from ...application.use_cases import create_item, update_item, list_item, get_item
 
 class ItemService:
-    def __init__(self, repository: ItemRepository):
+    def __init__(self, repository: ItemRepository) -> None:
         """
         Initialize the ItemService with the repository and use cases.
 
@@ -16,7 +18,7 @@ class ItemService:
         self.create_item_use_case = create_item.CreateItemUseCase(repository)
         self.update_item_use_case = update_item.UpdateItemUseCase(repository)
 
-    def get_item(self, item_id):
+    def get_item(self, item_id: int) -> Item:
         """
         Get an item by its ID.
 
@@ -28,16 +30,16 @@ class ItemService:
         """        
         return self.get_item_use_case.execute(item_id)
 
-    def list_items(self):
+    def list_items(self) -> List[Item]:
         """
         List all available items.
 
         Returns:
-            list[Item]: A list of all items.
+            List[Item]: A list of all items.
         """        
         return self.list_items_use_case.execute()
 
-    def create_item(self, data):
+    def create_item(self, data: dict) -> Item:
         """
         Create a new item with the provided data.
 
@@ -49,7 +51,7 @@ class ItemService:
         """        
         return self.create_item_use_case.execute(data)
 
-    def update_item(self, item_id, item_data):
+    def update_item(self, item_id: int, item_data: dict) -> Item:
         """
         Update an existing item with new data.
 

@@ -8,7 +8,7 @@ class ItemModel(models.Model):
     tax = models.DecimalField(max_digits=4, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Return a string representation of the item, which is its name.
 

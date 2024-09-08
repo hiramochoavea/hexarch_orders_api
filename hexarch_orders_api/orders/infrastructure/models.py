@@ -16,7 +16,7 @@ class OrderModel(models.Model):
     total_price_with_tax = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Order {self.id} - Created on {self.created_at}"
 
     class Meta:

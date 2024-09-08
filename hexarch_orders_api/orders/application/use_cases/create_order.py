@@ -6,7 +6,7 @@ from ...domain.exceptions import ItemNotFoundException
 from ...domain.utils import calculate_price_totals
 
 class CreateOrderUseCase:
-    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
+    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository) -> None:
         """
         Initialize the CreateOrderUseCase with the given repositories.
 
@@ -17,7 +17,7 @@ class CreateOrderUseCase:
         self.order_repository = order_repository
         self.item_repository = item_repository
 
-    def execute(self, data):
+    def execute(self, data: dict) -> Order:
         """
         Create a new order with the provided data.
 

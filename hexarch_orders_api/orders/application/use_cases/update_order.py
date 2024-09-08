@@ -9,7 +9,7 @@ class UpdateOrderUseCase:
     Use case for updating an existing order.
     """
 
-    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
+    def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository) -> None:
         """
         Initialize the UpdateOrderUseCase.
 
@@ -20,7 +20,7 @@ class UpdateOrderUseCase:
         self.order_repository = order_repository
         self.item_repository = item_repository
 
-    def execute(self, order_id, order_data):
+    def execute(self, order_id: int, order_data: dict) -> Order:
         """
         Execute the use case to update an order.
 

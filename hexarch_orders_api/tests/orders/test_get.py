@@ -1,9 +1,12 @@
 import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
+from typing import Callable
+from ...orders.infrastructure.models import OrderModel
 
 
 @pytest.mark.django_db
-def test_get_order_by_id(api_client, reverse_url, initial_order):
+def test_get_order_by_id(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_order: OrderModel) -> None:
     """
     Tests retrieving an order by its ID through the API.
 

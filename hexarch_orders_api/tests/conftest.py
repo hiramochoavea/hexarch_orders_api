@@ -1,20 +1,21 @@
-# conftest.py
 import pytest
+from typing import Callable
 from rest_framework.test import APIClient
 from django.urls import reverse
 from ..items.infrastructure.models import ItemModel
+from ..orders.domain.entities.order import Order
 from ..orders.infrastructure.models import OrderModel, OrderItemModel
 from ..orders.domain.utils import calculate_price_totals
 
 @pytest.fixture
-def api_client():
+def api_client() -> APIClient:
     """
     Fixture that provides an instance of APIClient for making HTTP requests in tests.
     """
     return APIClient()
 
 @pytest.fixture
-def reverse_url():
+def reverse_url() -> Callable[[str, tuple, dict], str]:
     """
     Fixture that provides a function to reverse URL names into actual URLs.
 
@@ -31,7 +32,7 @@ def reverse_url():
     return _reverse_url
 
 @pytest.fixture
-def initial_item(db):
+def initial_item(db) -> ItemModel:
     """
     Fixture that creates and returns an initial ItemModel instance with realistic attributes.
 
@@ -52,7 +53,7 @@ def initial_item(db):
     return item_obj
 
 @pytest.fixture
-def initial_order(db, initial_item):
+def initial_order(db, initial_item: ItemModel) -> Order:
     """
     Fixture that creates and returns an initial OrderModel instance with one item.
 

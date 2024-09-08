@@ -1,6 +1,8 @@
+from typing import Optional
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.request import Request
 from .serializers import OrderSerializer
 from ..domain.services.order_service import OrderService
 from ..infrastructure.adapters.order_repository import OrderRepository
@@ -17,7 +19,7 @@ class OrderAPIView(APIView):
         put: Updates an existing order by ID.
     """    
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """
         Initializes the OrderAPIView with the OrderService.
         """        
@@ -26,7 +28,7 @@ class OrderAPIView(APIView):
         self.service = OrderService(OrderRepository(), ItemRepository())
 
 
-    def get(self, request, order_id=None):
+    def get(self, request: Request, order_id: Optional[int] = None) -> Response:
         """
         Handles GET requests to retrieve an order or list all orders.
 
@@ -55,7 +57,7 @@ class OrderAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         """
         Handles POST requests to create a new order.
 
@@ -82,7 +84,7 @@ class OrderAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-    def put(self, request, order_id):
+    def put(self, request: Request, order_id: int) -> Response:
         """
         Handles PUT requests to update an existing order.
 

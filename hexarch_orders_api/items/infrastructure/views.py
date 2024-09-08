@@ -1,3 +1,5 @@
+from typing import Optional
+from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,7 +9,7 @@ from ..infrastructure.adapters.item_repository import ItemRepository
 
 class ItemAPIView(APIView):
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """
         Initialize the ItemAPIView with an instance of ItemService.
 
@@ -19,7 +21,7 @@ class ItemAPIView(APIView):
         self.service = ItemService(ItemRepository())
 
 
-    def get(self, request, item_id=None):
+    def get(self, request: Request, item_id: Optional[int] = None) -> Response:
         """
         Handle GET requests to retrieve items.
 
@@ -51,7 +53,7 @@ class ItemAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         """
         Handle POST requests to create a new item.
 
@@ -74,7 +76,7 @@ class ItemAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-    def put(self, request, item_id=None):
+    def put(self, request: Request, item_id: Optional[int] = None) -> Response:
         """
         Handle PUT requests to update an existing item.
 

@@ -1,4 +1,4 @@
-def calculate_price_totals(items):
+def calculate_price_totals(items: list) -> tuple:
     """
     Calculate the total price without tax and with tax for a list of items.
     

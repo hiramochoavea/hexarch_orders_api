@@ -1,8 +1,11 @@
 import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
+from typing import Callable
+from ...items.infrastructure.models import ItemModel
 
 @pytest.mark.django_db
-def test_edit_item(api_client, reverse_url, initial_item):
+def test_edit_item(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_item: ItemModel) -> None:
     """
     Tests the update of an item through the API.
 

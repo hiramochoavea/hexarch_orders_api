@@ -1,3 +1,4 @@
+from typing import List
 from ...domain.entities.item import Item
 from ...domain.ports.item_repository_port import ItemRepositoryPort
 from ...infrastructure.models import ItemModel
@@ -13,12 +14,12 @@ class ItemRepository(ItemRepositoryPort):
         """        
         self.model_class = ItemModel
 
-    def list_all(self) -> list:
+    def list_all(self) -> List[Item]:
         """
         Retrieve all items from the repository.
 
         Returns:
-            list: A list of domain Item instances.
+            List: A list of domain Item instances.
         """        
         items = self.model_class.objects.all()
         return [ItemMapper.to_domain(item) for item in items]
