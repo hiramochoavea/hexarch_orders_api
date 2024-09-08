@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ItemAPIView
+
+from .views import ItemDetailView, ItemListView
 
 urlpatterns = [
-    path('items/', ItemAPIView.as_view(), name='items'),
-    path('items/<int:item_id>/', ItemAPIView.as_view(), name='item'),
+    path("", ItemListView.as_view(), name="items"),
+    path("<int:item_id>/", ItemDetailView.as_view(), name="item"),
 ]

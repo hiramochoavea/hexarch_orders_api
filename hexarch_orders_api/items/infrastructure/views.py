@@ -1,5 +1,4 @@
-from typing import Optional
-
+from drf_spectacular.utils import OpenApiResponse, extend_schema
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -11,6 +10,12 @@ from .serializers import ItemSerializer
 
 
 class ItemAPIView(APIView):
+    """
+    Base view for handling item-related API requests.
+
+    This view provides a base implementation for item-related operations
+    by initializing the ItemService with an instance of ItemRepository.
+    """
 
     def __init__(self, **kwargs) -> None:
         """
@@ -18,34 +23,41 @@ class ItemAPIView(APIView):
 
         Args:
             **kwargs: Additional keyword arguments for the APIView.
+
+        This constructor sets up the ItemService with an ItemRepository instance
+        for handling item-related operations.
         """
         super().__init__(**kwargs)
 
         self.service = ItemService(ItemRepository())
 
-    def get(self, request: Request, item_id: Optional[int] = None) -> Response:
+
+class ItemListView(ItemAPIView):
+    """
+    View for handling list and creation of items.
+
+    This view handles HTTP GET requests to retrieve a list of items and
+    HTTP POST requests to create new items.
+    """
+
+    @extend_schema(
+        responses={
+            200: ItemSerializer,
+            404: OpenApiResponse(description="Item not found"),
+            204: OpenApiResponse(description="No items found"),
+        }
+    )
+    def get(self, request: Request) -> Response:
         """
-        Handle GET requests to retrieve items.
+        Handle GET requests to retrieve items list.
 
         Args:
             request: The HTTP request object.
-            item_id (int, optional): The unique identifier of the item to retrieve.
 
         Returns:
-            Response: The HTTP response object containing the item data or a status code.
+            Response: The HTTP response object containing the items list or a status code.
         """
 
-        # Retrieve an existent id
-        if item_id is not None:
-            item = self.service.get_item(item_id)
-
-            if item is None:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-
-            serializer = ItemSerializer(item)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-        # List all items
         items = self.service.list_items()
         serializer = ItemSerializer(items, many=True)
 
@@ -54,6 +66,13 @@ class ItemAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        request=ItemSerializer,
+        responses={
+            201: ItemSerializer,
+            400: OpenApiResponse(description="Invalid data"),
+        },
+    )
     def post(self, request: Request) -> Response:
         """
         Handle POST requests to create a new item.
@@ -76,21 +95,61 @@ class ItemAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request: Request, item_id: Optional[int] = None) -> Response:
+
+class ItemDetailView(ItemAPIView):
+    """
+    View for handling retrieval, update, and deletion of a single item.
+
+    This view handles HTTP GET requests to retrieve a single item by its ID,
+    HTTP PUT requests to update an existing item.
+    """
+
+    @extend_schema(
+        responses={
+            200: ItemSerializer,
+            404: OpenApiResponse(description="Item not found"),
+            204: OpenApiResponse(description="No items found"),
+        }
+    )
+    def get(self, request: Request, item_id: int) -> Response:
+        """
+        Handle GET requests to retrieve items.
+
+        Args:
+            request: The HTTP request object.
+            item_id (int): The unique identifier of the item to retrieve.
+
+        Returns:
+            Response: The HTTP response object containing the item data or a status code.
+        """
+        item = self.service.get_item(item_id)
+
+        if item is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        request=ItemSerializer,
+        responses={
+            200: ItemSerializer,
+            400: OpenApiResponse(description="Invalid data"),
+            404: OpenApiResponse(description="Item not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
+    def put(self, request: Request, item_id: int) -> Response:
         """
         Handle PUT requests to update an existing item.
 
         Args:
             request: The HTTP request object containing the updated item data.
-            item_id (int, optional): The unique identifier of the item to update.
+            item_id (int): The unique identifier of the item to update.
 
         Returns:
             Response: The HTTP response object containing the updated item data or an error message.
         """
-        if item_id is None:
-            return Response(
-                {"detail": "Item ID is required."}, status=status.HTTP_400_BAD_REQUEST
-            )
 
         # Retrieve the item to update
         item = self.service.get_item(item_id)

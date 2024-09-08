@@ -1,5 +1,4 @@
-from typing import Optional
-
+from drf_spectacular.utils import OpenApiResponse, extend_schema
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -17,42 +16,53 @@ from .serializers import OrderSerializer
 
 class OrderAPIView(APIView):
     """
-    API view for managing orders.
+    Base view for handling order-related API requests.
 
-    Methods:
-        get: Retrieves a specific order by ID or lists all orders.
-        post: Creates a new order.
-        put: Updates an existing order by ID.
+    This view provides a base implementation for order-related operations
+    by initializing the OrderService with an instance of OrderRepository,
+    and an instance of ItemRepository.
     """
 
     def __init__(self, **kwargs) -> None:
         """
-        Initializes the OrderAPIView with the OrderService.
+        Initialize the OrderAPIView with an instance of OrderService.
+
+        Args:
+            **kwargs: Additional keyword arguments for the APIView.
+
+        This constructor sets up the OrderService with an OrderRepository and
+        an ItemRepository instance, for handling item-related operations.
         """
         super().__init__(**kwargs)
 
         self.service = OrderService(OrderRepository(), ItemRepository())
 
-    def get(self, request: Request, order_id: Optional[int] = None) -> Response:
+
+class OrderListView(OrderAPIView):
+    """
+    View for handling GET and POST requests related to orders.
+
+    This view handles retrieval of a list of orders or a specific order
+    based on provided filters. It also supports creating new orders.
+    """
+
+    @extend_schema(
+        responses={
+            200: OrderSerializer,
+            404: OpenApiResponse(description="Order not found"),
+            204: OpenApiResponse(description="No orders found"),
+        }
+    )
+    def get(self, request: Request) -> Response:
         """
         Handles GET requests to retrieve an order or list all orders.
 
         Args:
             request: The HTTP request object.
-            order_id: The ID of the order to retrieve. If None, lists all orders.
 
         Returns:
-            A Response object with the order data or a list of orders.
+            A Response object with the list of orders.
         """
-        if order_id is not None:
-            order = self.service.get_order(order_id)
-
-            if order is None:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-
-            serializer = OrderSerializer(order)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
         orders = self.service.list_orders()
         serializer = OrderSerializer(orders, many=True)
 
@@ -61,6 +71,15 @@ class OrderAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        request=OrderSerializer,
+        responses={
+            201: OrderSerializer,
+            400: OpenApiResponse(description="Invalid data"),
+            409: OpenApiResponse(description="Item not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     def post(self, request: Request) -> Response:
         """
         Handles POST requests to create a new order.
@@ -92,6 +111,49 @@ class OrderAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class OrderDetailView(OrderAPIView):
+    """
+    View for handling GET and PUT requests related to a specific order.
+
+    This view handles retrieval of a specific order by its ID, as well as
+    updating an existing order.
+    """
+
+    @extend_schema(
+        responses={
+            200: OrderSerializer,
+            404: OpenApiResponse(description="Order not found"),
+            204: OpenApiResponse(description="No orders found"),
+        }
+    )
+    def get(self, request: Request, order_id: int) -> Response:
+        """
+        Handles GET requests to retrieve an order.
+
+        Args:
+            request: The HTTP request object.
+            order_id: The ID of the order to retrieve.
+
+        Returns:
+            A Response object with the order data.
+        """
+        order = self.service.get_order(order_id)
+
+        if order is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        request=OrderSerializer,
+        responses={
+            200: OrderSerializer,
+            400: OpenApiResponse(description="Invalid data"),
+            404: OpenApiResponse(description="Order not found"),
+        },
+    )
     def put(self, request: Request, order_id: int) -> Response:
         """
         Handles PUT requests to update an existing order.

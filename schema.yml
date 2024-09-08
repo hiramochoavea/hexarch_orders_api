@@ -1,0 +1,393 @@
+openapi: 3.0.3
+info:
+  title: Orders API
+  version: 1.0.0
+  description: Orders API with Hexagonal Architecture.
+paths:
+  /api/items/:
+    get:
+      operationId: items_retrieve
+      description: |-
+        Handle GET requests to retrieve items list.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            Response: The HTTP response object containing the items list or a status code.
+      tags:
+      - items
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: ''
+        '404':
+          description: Item not found
+        '204':
+          description: No items found
+    post:
+      operationId: items_create
+      description: |-
+        Handle POST requests to create a new item.
+
+        Args:
+            request: The HTTP request object containing the item data.
+
+        Returns:
+            Response: The HTTP response object containing the created item data or errors.
+      tags:
+      - items
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Item'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Item'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: ''
+        '400':
+          description: Invalid data
+  /api/items/{item_id}/:
+    get:
+      operationId: items_retrieve_2
+      description: |-
+        Handle GET requests to retrieve items.
+
+        Args:
+            request: The HTTP request object.
+            item_id (int): The unique identifier of the item to retrieve.
+
+        Returns:
+            Response: The HTTP response object containing the item data or a status code.
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - items
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: ''
+        '404':
+          description: Item not found
+        '204':
+          description: No items found
+    put:
+      operationId: items_update
+      description: |-
+        Handle PUT requests to update an existing item.
+
+        Args:
+            request: The HTTP request object containing the updated item data.
+            item_id (int): The unique identifier of the item to update.
+
+        Returns:
+            Response: The HTTP response object containing the updated item data or an error message.
+      parameters:
+      - in: path
+        name: item_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - items
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Item'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Item'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: ''
+        '400':
+          description: Invalid data
+        '404':
+          description: Item not found
+        '500':
+          description: Internal server error
+  /api/orders/:
+    get:
+      operationId: orders_retrieve
+      description: |-
+        Handles GET requests to retrieve an order or list all orders.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            A Response object with the list of orders.
+      tags:
+      - orders
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+        '404':
+          description: Order not found
+        '204':
+          description: No orders found
+    post:
+      operationId: orders_create
+      description: |-
+        Handles POST requests to create a new order.
+
+        Args:
+            request: The HTTP request object containing order data.
+
+        Returns:
+            A Response object with the created order data or an error message.
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+        '400':
+          description: Invalid data
+        '409':
+          description: Item not found
+        '500':
+          description: Internal server error
+  /api/orders/{order_id}/:
+    get:
+      operationId: orders_retrieve_2
+      description: |-
+        Handles GET requests to retrieve an order.
+
+        Args:
+            request: The HTTP request object.
+            order_id: The ID of the order to retrieve.
+
+        Returns:
+            A Response object with the order data.
+      parameters:
+      - in: path
+        name: order_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - orders
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+        '404':
+          description: Order not found
+        '204':
+          description: No orders found
+    put:
+      operationId: orders_update
+      description: |-
+        Handles PUT requests to update an existing order.
+
+        Args:
+            request: The HTTP request object containing updated order data.
+            order_id: The ID of the order to update.
+
+        Returns:
+            A Response object with the updated order data or an error message.
+      parameters:
+      - in: path
+        name: order_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+        '400':
+          description: Invalid data
+        '404':
+          description: Order not found
+components:
+  schemas:
+    Item:
+      type: object
+      description: |-
+        Serializer for converting ItemModel instances to and from JSON.
+
+        Attributes:
+            price_without_tax (FloatField): The price of the item excluding tax.
+            tax (FloatField): The applicable tax rate for the item.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        price_without_tax:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        reference:
+          type: string
+          maxLength: 100
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - description
+      - id
+      - name
+      - price_without_tax
+      - reference
+      - tax
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        total_price_without_tax:
+          type: number
+          format: double
+          readOnly: true
+        total_price_with_tax:
+          type: number
+          format: double
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - items
+      - total_price_with_tax
+      - total_price_without_tax
+    OrderItem:
+      type: object
+      properties:
+        reference:
+          type: string
+        quantity:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+      required:
+      - quantity
+      - reference
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
