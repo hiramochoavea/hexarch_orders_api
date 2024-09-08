@@ -1,12 +1,18 @@
+from typing import Callable
+
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
-from typing import Callable
+
 from ...items.infrastructure.models import ItemModel
 
 
 @pytest.mark.django_db
-def test_get_item_by_id(api_client: APIClient, reverse_url: Callable[[str, ...], str], initial_item: ItemModel) -> None:
+def test_get_item_by_id(
+    api_client: APIClient,
+    reverse_url: Callable[[str, ...], str],
+    initial_item: ItemModel,
+) -> None:
     """
     Tests retrieving an item by its ID through the API.
 
@@ -21,7 +27,7 @@ def test_get_item_by_id(api_client: APIClient, reverse_url: Callable[[str, ...],
     """
 
     # Make the GET request to retrieve the item by its ID
-    url = reverse_url('item', kwargs={'item_id': initial_item.id})
+    url = reverse_url("item", kwargs={"item_id": initial_item.id})
     response = api_client.get(url)
 
     # Get the response data
@@ -31,9 +37,9 @@ def test_get_item_by_id(api_client: APIClient, reverse_url: Callable[[str, ...],
     assert response.status_code == status.HTTP_200_OK
 
     # Verify that the response contains the item created in the fixture
-    assert item['id'] == initial_item.id
-    assert item['reference'] == initial_item.reference
-    assert item['name'] == initial_item.name
-    assert item['description'] == initial_item.description
-    assert item['price_without_tax'] == initial_item.price_without_tax
-    assert item['tax'] == initial_item.tax
+    assert item["id"] == initial_item.id
+    assert item["reference"] == initial_item.reference
+    assert item["name"] == initial_item.name
+    assert item["description"] == initial_item.description
+    assert item["price_without_tax"] == initial_item.price_without_tax
+    assert item["tax"] == initial_item.tax

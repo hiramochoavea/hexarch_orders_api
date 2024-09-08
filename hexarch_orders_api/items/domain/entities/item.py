@@ -3,7 +3,16 @@ class Item:
     Represents an item entity with its attributes.
     """
 
-    def __init__(self, reference, name, description, price_without_tax, tax, id=None, created_at=None) -> None:
+    def __init__(
+        self,
+        reference,
+        name,
+        description,
+        price_without_tax,
+        tax,
+        id=None,
+        created_at=None,
+    ) -> None:
         """
         Initialize an Item entity.
 

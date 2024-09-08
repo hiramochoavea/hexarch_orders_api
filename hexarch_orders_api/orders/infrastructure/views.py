@@ -1,13 +1,18 @@
 from typing import Optional
-from rest_framework.views import APIView
-from rest_framework.response import Response
+
 from rest_framework import status
 from rest_framework.request import Request
-from .serializers import OrderSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from hexarch_orders_api.items.infrastructure.adapters.item_repository import (
+    ItemRepository,
+)
+
+from ..domain.exceptions import ItemNotFoundException
 from ..domain.services.order_service import OrderService
 from ..infrastructure.adapters.order_repository import OrderRepository
-from hexarch_orders_api.items.infrastructure.adapters.item_repository import ItemRepository
-from ..domain.exceptions import ItemNotFoundException
+from .serializers import OrderSerializer
 
 
 class OrderAPIView(APIView):
@@ -74,11 +79,16 @@ class OrderAPIView(APIView):
             try:
                 order = self.service.create_order(order_data)
                 response_serializer = OrderSerializer(order)
-                return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+                return Response(
+                    response_serializer.data, status=status.HTTP_201_CREATED
+                )
             except ItemNotFoundException as e:
-                return Response({'error': str(e)}, status=status.HTTP_409_CONFLICT)
+                return Response({"error": str(e)}, status=status.HTTP_409_CONFLICT)
             except Exception as e:
-                return Response({'error': 'An unexpected error occurred.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(
+                    {"error": "An unexpected error occurred."},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -98,7 +108,8 @@ class OrderAPIView(APIView):
         if serializer.is_valid():
             try:
                 updated_order = self.service.update_order(
-                    order_id, serializer.validated_data)
+                    order_id, serializer.validated_data
+                )
                 response_serializer = OrderSerializer(updated_order)
                 return Response(response_serializer.data, status=status.HTTP_200_OK)
             except ValueError as e:

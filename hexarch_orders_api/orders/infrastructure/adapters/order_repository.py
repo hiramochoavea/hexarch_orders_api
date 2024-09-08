@@ -1,9 +1,12 @@
 from typing import List
+
+from hexarch_orders_api.items.infrastructure.models import ItemModel
+
 from ...domain.entities.order import Order
 from ...domain.ports.order_repository_port import OrderRepositoryPort
-from ...infrastructure.models import OrderModel, OrderItemModel
-from hexarch_orders_api.items.infrastructure.models import ItemModel
+from ...infrastructure.models import OrderItemModel, OrderModel
 from .order_mapper import OrderMapper
+
 
 class OrderRepository(OrderRepositoryPort):
     """
@@ -21,7 +24,7 @@ class OrderRepository(OrderRepositoryPort):
     def __init__(self):
         """
         Initializes the OrderRepository with the OrderModel.
-        """        
+        """
         self.model_class = OrderModel
 
     def get_by_id(self, order_id: int) -> Order:
@@ -33,23 +36,23 @@ class OrderRepository(OrderRepositoryPort):
 
         Returns:
             An Order instance or None if not found.
-        """        
+        """
         try:
             order_model = self.model_class.objects.get(id=order_id)
         except OrderModel.DoesNotExist:
             return None
         return OrderMapper.to_domain(order_model)
-    
+
     def list_all(self) -> List[Order]:
         """
         Lists all Orders.
 
         Returns:
             A list of Order instances.
-        """        
+        """
         orders = self.model_class.objects.all()
         return [OrderMapper.to_domain(order) for order in orders]
-    
+
     def create(self, order: Order) -> Order:
         """
         Creates a new Order.
@@ -59,16 +62,14 @@ class OrderRepository(OrderRepositoryPort):
 
         Returns:
             The created Order instance.
-        """        
+        """
         order_model = OrderMapper.to_model(order)
         order_model.save()
 
         for item in order.items:
             item_model = ItemModel.objects.get(reference=item.reference)
             OrderItemModel.objects.create(
-                order=order_model,
-                item=item_model,
-                quantity=item.quantity
+                order=order_model, item=item_model, quantity=item.quantity
             )
         return OrderMapper.to_domain(order_model)
 
@@ -81,7 +82,7 @@ class OrderRepository(OrderRepositoryPort):
 
         Returns:
             The updated Order instance or None if not found.
-        """        
+        """
         try:
             order_model = self.model_class.objects.get(id=order.id)
         except OrderModel.DoesNotExist:
@@ -92,13 +93,11 @@ class OrderRepository(OrderRepositoryPort):
         order_model.save()
 
         OrderItemModel.objects.filter(order=order_model).delete()
-        
+
         for item in order.items:
             item_model = ItemModel.objects.get(reference=item.reference)
             OrderItemModel.objects.create(
-                order=order_model,
-                item=item_model,
-                quantity=item.quantity
+                order=order_model, item=item_model, quantity=item.quantity
             )
         return OrderMapper.to_domain(order_model)
 
@@ -108,7 +107,7 @@ class OrderRepository(OrderRepositoryPort):
 
         Args:
             order_id: The ID of the order from which to remove items.
-        """        
+        """
         try:
             order_model = self.model_class.objects.get(id=order_id)
         except OrderModel.DoesNotExist:
@@ -123,14 +122,12 @@ class OrderRepository(OrderRepositoryPort):
             order_id: The ID of the order to which to add the item.
             item_reference: The reference of the item to add.
             quantity: The quantity of the item to add.
-        """        
+        """
         try:
             order_model = self.model_class.objects.get(id=order_id)
             item_model = ItemModel.objects.get(reference=item_reference)
         except (OrderModel.DoesNotExist, ItemModel.DoesNotExist):
             return
         OrderItemModel.objects.create(
-            order=order_model,
-            item=item_model,
-            quantity=quantity
+            order=order_model, item=item_model, quantity=quantity
         )

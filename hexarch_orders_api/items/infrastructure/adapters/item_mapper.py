@@ -29,7 +29,7 @@ class ItemMapper:
             description=item_model.description,
             price_without_tax=float(item_model.price_without_tax),
             tax=float(item_model.tax),
-            created_at=item_model.created_at
+            created_at=item_model.created_at,
         )
 
     @staticmethod
@@ -48,5 +48,5 @@ class ItemMapper:
             name=item.name,
             description=item.description,
             price_without_tax=item.price_without_tax,
-            tax=item.tax
+            tax=item.tax,
         )

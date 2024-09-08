@@ -1,3 +1,5 @@
+from typing import Dict
+
 from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
@@ -15,17 +17,17 @@ class CreateItemUseCase:
         Initialize the CreateItemUseCase with the given item repository.
 
         Args:
-            item_repository (ItemRepository): The repository handling the item persistence.
+            item_repository (ItemRepository): The repository handling item persistence.
         """
         self.item_repository = item_repository
 
-    def execute(self, data: dict) -> Item:
+    def execute(self, data: Dict[str, any]) -> Item:
         """
         Create a new item using the provided data.
 
         Args:
-            data (dict): Data required to create a new item (reference, name, description, price, tax, etc.).
-
+            data (Dict[str, any]): Data required to create a new item
+            (reference, name, description, price, tax, etc.).
         Returns:
             Item: The created item.
         """

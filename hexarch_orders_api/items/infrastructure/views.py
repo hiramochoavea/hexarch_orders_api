@@ -1,11 +1,13 @@
 from typing import Optional
-from rest_framework.request import Request
-from rest_framework.views import APIView
-from rest_framework.response import Response
+
 from rest_framework import status
-from .serializers import ItemSerializer
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from ..domain.services.item_service import ItemService
 from ..infrastructure.adapters.item_repository import ItemRepository
+from .serializers import ItemSerializer
 
 
 class ItemAPIView(APIView):
@@ -86,7 +88,9 @@ class ItemAPIView(APIView):
             Response: The HTTP response object containing the updated item data or an error message.
         """
         if item_id is None:
-            return Response({"detail": "Item ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Item ID is required."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         # Retrieve the item to update
         item = self.service.get_item(item_id)
@@ -104,4 +108,7 @@ class ItemAPIView(APIView):
             return Response(serializer.data)
 
         except Exception as e:
-            return Response({"detail": "An error occurred during update."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"detail": "An error occurred during update."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
