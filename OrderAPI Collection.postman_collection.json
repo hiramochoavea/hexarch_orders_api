@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "962a5ef4-f205-49e6-a8e8-bfaaf0b80d91",
+		"name": "OrderAPI Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21315130"
+	},
+	"item": [
+		{
+			"name": "[Orders] Get By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4450/api/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Orders] List All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4450/api/orders/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Orders] Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"reference\": \"PIX2022\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4450/api/orders/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Orders] Edit",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"reference\": \"PIX2022\",\r\n            \"quantity\": 7\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4450/api/orders/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"orders",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Items] List All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4450/api/items/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Items] Get By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4450/api/items/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"items",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Items] Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reference\": \"PIX2022\",\r\n    \"name\": \"Google Pixel 6\",\r\n    \"description\": \"A high-performance smartphone with a 6.4-inch AMOLED display, 128GB storage, and Google's Tensor chip.\",\r\n    \"price_without_tax\": 649.00,\r\n    \"tax\": 21.00\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4450/api/items/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Items] Edit",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reference\": \"PIX2022-2\",\r\n    \"name\": \"Google Pixel 6 2nd Edition\",\r\n    \"description\": \"A high-performance 2nd generation smartphone with a 6.4-inch AMOLED display, 128GB storage, and Google's Tensor chip.\",\r\n    \"price_without_tax\": 849.00,\r\n    \"tax\": 22.00\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4450/api/items/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4450",
+					"path": [
+						"api",
+						"items",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
