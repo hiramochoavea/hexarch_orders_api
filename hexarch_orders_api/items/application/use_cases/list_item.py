@@ -3,6 +3,13 @@ from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class ListItemsUseCase:
+    """
+    Use case for listing all available items.
+
+    Attributes:
+        item_repository (ItemRepository): The repository for listing the items.
+    """   
+        
     def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the ListItemsUseCase with the given item repository.

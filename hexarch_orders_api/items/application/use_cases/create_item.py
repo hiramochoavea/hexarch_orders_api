@@ -2,6 +2,13 @@ from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class CreateItemUseCase:
+    """
+    Use case for creating a new item.
+
+    Attributes:
+        item_repository (ItemRepository): The repository responsible for item persistence.
+    """
+        
     def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the CreateItemUseCase with the given item repository.

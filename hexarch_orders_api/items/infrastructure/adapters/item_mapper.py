@@ -2,6 +2,14 @@ from ...domain.entities.item import Item
 from ...infrastructure.models import ItemModel
 
 class ItemMapper:
+    """
+    Mapper class for converting between domain Item and ItemModel instances.
+
+    Methods:
+        to_domain(item_model: ItemModel) -> Item: Converts an ItemModel instance to a domain Item instance.
+        to_model(item: Item) -> ItemModel: Converts a domain Item instance to an ItemModel instance.
+    """
+        
     @staticmethod
     def to_domain(item_model: ItemModel) -> Item:
         """

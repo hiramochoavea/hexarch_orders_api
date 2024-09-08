@@ -5,6 +5,16 @@ from ...infrastructure.models import ItemModel
 from .item_mapper import ItemMapper
 
 class ItemRepository(ItemRepositoryPort):
+    """
+    Repository for managing item persistence.
+
+    Inherits from:
+        ItemRepositoryPort: The port defining the interface for item repositories.
+
+    Attributes:
+        model_class (Type[ItemModel]): The model class used for item persistence.
+    """
+        
     def __init__(self):
         """
         Initialize the ItemRepository with the ItemModel class.

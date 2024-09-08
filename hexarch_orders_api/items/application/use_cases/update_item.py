@@ -2,6 +2,13 @@ from ...domain.entities.item import Item
 from ...infrastructure.adapters.item_repository import ItemRepository
 
 class UpdateItemUseCase:
+    """
+    Use case for updating an existing item with new data.
+
+    Attributes:
+        item_repository (ItemRepository): The repository for updating the item data.
+    """   
+        
     def __init__(self, item_repository: ItemRepository) -> None:
         """
         Initialize the UpdateItemUseCase with the given item repository.
