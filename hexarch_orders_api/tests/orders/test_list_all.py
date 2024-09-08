@@ -4,6 +4,19 @@ from rest_framework import status
 
 @pytest.mark.django_db
 def test_list_all_orders(api_client, reverse_url, initial_order):
+    """
+    Tests listing all orders through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_order: The initial OrderModel instance to ensure it is included in the list.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data contains the initial order details.
+    """
+
     # Make the GET request to list all orders
     response = api_client.get(reverse_url('orders'))
 

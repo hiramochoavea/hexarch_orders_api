@@ -7,10 +7,26 @@ from ...domain.utils import calculate_price_totals
 
 class CreateOrderUseCase:
     def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
+        """
+        Initialize the CreateOrderUseCase with the given repositories.
+
+        Args:
+            order_repository (OrderRepository): The repository for handling orders.
+            item_repository (ItemRepository): The repository for handling items.
+        """        
         self.order_repository = order_repository
         self.item_repository = item_repository
 
     def execute(self, data):
+        """
+        Create a new order with the provided data.
+
+        Args:
+            data (dict): Data for creating the order, including items and their quantities.
+
+        Returns:
+            Order: The created order instance.
+        """        
         items_data = data.get('items', [])
         order_items = []
         

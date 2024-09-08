@@ -4,6 +4,15 @@ from ...infrastructure.models import ItemModel
 class ItemMapper:
     @staticmethod
     def to_domain(item_model: ItemModel) -> Item:
+        """
+        Convert an ItemModel instance to a domain Item instance.
+
+        Args:
+            item_model (ItemModel): The ItemModel instance to convert.
+
+        Returns:
+            Item: The domain Item instance.
+        """        
         return Item(
             id=item_model.pk,
             reference=item_model.reference,
@@ -16,6 +25,15 @@ class ItemMapper:
 
     @staticmethod
     def to_model(item: Item) -> ItemModel:
+        """
+        Convert a domain Item instance to an ItemModel instance.
+
+        Args:
+            item (Item): The domain Item instance to convert.
+
+        Returns:
+            ItemModel: The ItemModel instance.
+        """        
         return ItemModel(
             reference=item.reference,
             name=item.name,

@@ -3,6 +3,18 @@ import pytest
 
 @pytest.mark.django_db
 def test_create_item(api_client, reverse_url):
+    """
+    Tests the creation of an item through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+
+    Asserts:
+        Response status code is 201 (Created).
+        Response data matches the payload and contains expected fields.
+    """
+
     payload = dict(
         reference="PIX2022",
         name="Google Pixel 6",

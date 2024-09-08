@@ -3,6 +3,19 @@ from rest_framework import status
 
 @pytest.mark.django_db
 def test_get_item_by_id(api_client, reverse_url, initial_item):
+    """
+    Tests retrieving an item by its ID through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_item: The initial ItemModel instance to retrieve.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data matches the initial item.
+    """
+
     # Make the GET request to retrieve the item by its ID
     url = reverse_url('item', kwargs={'item_id': initial_item.id})
     response = api_client.get(url)

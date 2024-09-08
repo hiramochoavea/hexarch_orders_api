@@ -5,11 +5,35 @@ from hexarch_orders_api.items.infrastructure.adapters.item_repository import Ite
 from ...domain.utils import calculate_price_totals
 
 class UpdateOrderUseCase:
+    """
+    Use case for updating an existing order.
+    """
+
     def __init__(self, order_repository: OrderRepository, item_repository: ItemRepository):
+        """
+        Initialize the UpdateOrderUseCase.
+
+        Args:
+            order_repository (OrderRepository): The repository used to access order data.
+            item_repository (ItemRepository): The repository used to access item data.
+        """        
         self.order_repository = order_repository
         self.item_repository = item_repository
 
     def execute(self, order_id, order_data):
+        """
+        Execute the use case to update an order.
+
+        Args:
+            order_id (int): The unique identifier of the order to update.
+            order_data (dict): The data to update the order with.
+
+        Returns:
+            Order: The updated order.
+
+        Raises:
+            ValueError: If the order or any items in the order are not found.
+        """        
         order = self.order_repository.get_by_id(order_id)
         if not order:
             raise ValueError("Order not found")

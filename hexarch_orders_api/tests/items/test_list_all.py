@@ -3,6 +3,19 @@ from rest_framework import status
 
 @pytest.mark.django_db
 def test_list_all_items(api_client, reverse_url, initial_item):
+    """
+    Tests listing all items through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_item: The initial ItemModel instance to ensure it is included in the list.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data contains the initial item.
+    """
+
     # Make the GET request to list all items
     response = api_client.get(reverse_url('items'))
 

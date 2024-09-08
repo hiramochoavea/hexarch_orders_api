@@ -9,6 +9,12 @@ class ItemModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
+        """
+        Return a string representation of the item, which is its name.
+
+        Returns:
+            str: The name of the item.
+        """        
         return self.name
 
     class Meta:

@@ -3,6 +3,19 @@ from rest_framework import status
 
 @pytest.mark.django_db
 def test_edit_item(api_client, reverse_url, initial_item):
+    """
+    Tests the update of an item through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_item: The initial ItemModel instance to update.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data matches the updated payload.
+    """
+
     # Define the payload with updated data
     updated_payload = dict(
         reference="PHN2024",

@@ -8,14 +8,35 @@ from hexarch_orders_api.items.infrastructure.adapters.item_repository import Ite
 from ..domain.exceptions import ItemNotFoundException
 
 class OrderAPIView(APIView):
+    """
+    API view for managing orders.
+
+    Methods:
+        get: Retrieves a specific order by ID or lists all orders.
+        post: Creates a new order.
+        put: Updates an existing order by ID.
+    """    
 
     def __init__(self, **kwargs):
+        """
+        Initializes the OrderAPIView with the OrderService.
+        """        
         super().__init__(**kwargs)
 
         self.service = OrderService(OrderRepository(), ItemRepository())
 
 
     def get(self, request, order_id=None):
+        """
+        Handles GET requests to retrieve an order or list all orders.
+
+        Args:
+            request: The HTTP request object.
+            order_id: The ID of the order to retrieve. If None, lists all orders.
+
+        Returns:
+            A Response object with the order data or a list of orders.
+        """        
         if order_id is not None:
             order = self.service.get_order(order_id)
 
@@ -35,6 +56,15 @@ class OrderAPIView(APIView):
     
     
     def post(self, request):
+        """
+        Handles POST requests to create a new order.
+
+        Args:
+            request: The HTTP request object containing order data.
+
+        Returns:
+            A Response object with the created order data or an error message.
+        """        
         serializer = OrderSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -53,6 +83,16 @@ class OrderAPIView(APIView):
     
 
     def put(self, request, order_id):
+        """
+        Handles PUT requests to update an existing order.
+
+        Args:
+            request: The HTTP request object containing updated order data.
+            order_id: The ID of the order to update.
+
+        Returns:
+            A Response object with the updated order data or an error message.
+        """        
         serializer = OrderSerializer(data=request.data)
         
         if serializer.is_valid():

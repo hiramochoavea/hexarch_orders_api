@@ -8,12 +8,28 @@ from ..infrastructure.adapters.item_repository import ItemRepository
 class ItemAPIView(APIView):
 
     def __init__(self, **kwargs):
+        """
+        Initialize the ItemAPIView with an instance of ItemService.
+
+        Args:
+            **kwargs: Additional keyword arguments for the APIView.
+        """        
         super().__init__(**kwargs)
 
         self.service = ItemService(ItemRepository())
 
 
     def get(self, request, item_id=None):
+        """
+        Handle GET requests to retrieve items.
+
+        Args:
+            request: The HTTP request object.
+            item_id (int, optional): The unique identifier of the item to retrieve.
+
+        Returns:
+            Response: The HTTP response object containing the item data or a status code.
+        """        
 
         # Retrieve an existent id
         if item_id is not None:
@@ -36,6 +52,15 @@ class ItemAPIView(APIView):
     
 
     def post(self, request):
+        """
+        Handle POST requests to create a new item.
+
+        Args:
+            request: The HTTP request object containing the item data.
+
+        Returns:
+            Response: The HTTP response object containing the created item data or errors.
+        """        
 
         # Create a new item
         serializer = ItemSerializer(data=request.data)
@@ -50,6 +75,16 @@ class ItemAPIView(APIView):
     
 
     def put(self, request, item_id=None):
+        """
+        Handle PUT requests to update an existing item.
+
+        Args:
+            request: The HTTP request object containing the updated item data.
+            item_id (int, optional): The unique identifier of the item to update.
+
+        Returns:
+            Response: The HTTP response object containing the updated item data or an error message.
+        """        
         if item_id is None:
             return Response({"detail": "Item ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 

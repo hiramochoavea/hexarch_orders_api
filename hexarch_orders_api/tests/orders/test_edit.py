@@ -4,6 +4,21 @@ from ...orders.domain.utils import calculate_price_totals
 
 @pytest.mark.django_db
 def test_edit_order(api_client, reverse_url, initial_order, initial_item):
+    """
+    Tests the update of an order through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_order: The initial OrderModel instance to update.
+        initial_item: The initial ItemModel instance used in the update.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data contains the updated order details.
+        Calculated total prices match the response.
+    """
+
     # Define the updated payload
     payload = dict(
         items=[

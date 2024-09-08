@@ -4,6 +4,19 @@ from rest_framework import status
 
 @pytest.mark.django_db
 def test_get_order_by_id(api_client, reverse_url, initial_order):
+    """
+    Tests retrieving an order by its ID through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_order: The initial OrderModel instance to retrieve.
+
+    Asserts:
+        Response status code is 200 (OK).
+        Response data matches the initial order details.
+    """
+
     # Define the URL for the specific order by its ID
     url = reverse_url('order', kwargs={'order_id': initial_order.id})
 

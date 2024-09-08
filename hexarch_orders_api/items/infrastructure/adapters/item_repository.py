@@ -5,13 +5,34 @@ from .item_mapper import ItemMapper
 
 class ItemRepository(ItemRepositoryPort):
     def __init__(self):
+        """
+        Initialize the ItemRepository with the ItemModel class.
+
+        Args:
+            None
+        """        
         self.model_class = ItemModel
 
     def list_all(self) -> list:
+        """
+        Retrieve all items from the repository.
+
+        Returns:
+            list: A list of domain Item instances.
+        """        
         items = self.model_class.objects.all()
         return [ItemMapper.to_domain(item) for item in items]
     
     def get_by_id(self, item_id: int) -> Item:
+        """
+        Retrieve an item by its unique identifier.
+
+        Args:
+            item_id (int): The unique identifier of the item.
+
+        Returns:
+            Item: The domain Item instance, or None if not found.
+        """        
         try:
             item_model = self.model_class.objects.get(id=item_id)
         except ItemModel.DoesNotExist:
@@ -19,6 +40,15 @@ class ItemRepository(ItemRepositoryPort):
         return ItemMapper.to_domain(item_model)
 
     def get_by_reference(self, reference: str) -> Item:
+        """
+        Retrieve an item by its reference.
+
+        Args:
+            reference (str): The reference code of the item.
+
+        Returns:
+            Item: The domain Item instance, or None if not found.
+        """        
         try:
             item_model = self.model_class.objects.get(reference=reference)
         except ItemModel.DoesNotExist:
@@ -26,11 +56,30 @@ class ItemRepository(ItemRepositoryPort):
         return ItemMapper.to_domain(item_model)
 
     def create(self, item: Item) -> Item:
+        """
+        Create a new item in the repository.
+
+        Args:
+            item (Item): The domain Item instance to create.
+
+        Returns:
+            Item: The created domain Item instance.
+        """        
         item_model = ItemMapper.to_model(item)
         item_model.save()
         return ItemMapper.to_domain(item_model)
     
     def update(self, item_id: int, item_data: dict) -> ItemModel:
+        """
+        Update an existing item with new data.
+
+        Args:
+            item_id (int): The unique identifier of the item to update.
+            item_data (dict): The new data to update the item with.
+
+        Returns:
+            Item: The updated domain Item instance, or None if not found.
+        """        
         try:
             item_model = self.model_class.objects.get(id=item_id)
         except ItemModel.DoesNotExist:

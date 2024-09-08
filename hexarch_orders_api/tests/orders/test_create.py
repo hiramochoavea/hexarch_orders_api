@@ -3,6 +3,20 @@ from ...orders.domain.utils import calculate_price_totals
 
 @pytest.mark.django_db
 def test_create_order(api_client, reverse_url, initial_item):
+    """
+    Tests the creation of an order through the API.
+
+    Args:
+        api_client: The APIClient instance for making requests.
+        reverse_url: The function for reversing URL names.
+        initial_item: The initial ItemModel instance to include in the order.
+
+    Asserts:
+        Response status code is 201 (Created).
+        Response data contains the expected fields and values.
+        Calculated total prices match the response.
+    """
+
     payload = dict(
         items=[
             {
