@@ -13,7 +13,7 @@ class OrderMapper:
                     quantity=order_item.quantity,
                     reference=order_item.item.reference,
                 )
-                for order_item in order_model.orderitemmodel_set.all()
+                for order_item in order_model.order_items.all()
             ],
             total_price_without_tax=float(order_model.total_price_without_tax),
             total_price_with_tax=float(order_model.total_price_with_tax),

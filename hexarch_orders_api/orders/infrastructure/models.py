@@ -15,8 +15,8 @@ class OrderModel(models.Model):
 
 
 class OrderItemModel(models.Model):
-    order = models.ForeignKey(OrderModel, on_delete=models.CASCADE)
-    item = models.ForeignKey(ItemModel, on_delete=models.CASCADE)
+    order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, related_name='order_items')
+    item = models.ForeignKey(ItemModel, on_delete=models.CASCADE, related_name='item_orders')
     quantity = models.PositiveIntegerField()
 
     class Meta:

@@ -18,9 +18,12 @@ def test_get_order_by_id(api_client, reverse_url, initial_order):
 
     # Verify that the response contains the correct order data
     assert order['id'] == initial_order.id
+
+    first_item_on_order = initial_order.items.first()
+
     assert any(
-        item['reference'] == initial_order.items.first().reference and 
-        item['quantity'] == initial_order.items.first().orderitemmodel_set.first().quantity
+        item['reference'] == first_item_on_order.reference and 
+        item['quantity'] == first_item_on_order.item_orders.first().quantity
         for item in order['items']
     )
     assert abs(order['total_price_without_tax'] - initial_order.total_price_without_tax) < 0.01
