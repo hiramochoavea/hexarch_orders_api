@@ -40,6 +40,18 @@ The file "OrderAPI Collection.postman_collection.json" contains basic HTTP reque
 
 The API is designed according to the OpenAPI 3.0 specification. For more information, visit http://localhost:4450/api/schema/docs/ after setting up the project.
 
+## Unit Testing
+
+To run unit tests created for this API, execute the following command inside the Docker container:
+   ```bash
+   pytest
+   ```
+
+  Alternatively, you can use the following command when you are in the /hexarch_orders_api/ directory (outside of the container).
+   ```bash
+  docker exec -it orders_api pytest
+   ```  
+
 ### Items Endpoints
 
 #### `GET /api/items/`
