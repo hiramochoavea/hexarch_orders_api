@@ -8,7 +8,7 @@ This is a REST API for item and order management implemented in Python using the
 - **Hexagonal Architecture**: The system follows a layered architecture that separates concerns between business logic, infrastructure, and interfaces.
 
 ## Technologies Used
-- Python 3.23
+- Python 3.12
 - Django 5.0.4
 - Django Rest Framework 3.15.1
 - MySQL
